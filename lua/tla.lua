@@ -17,14 +17,15 @@ M.check = function()
 		config.tla2tools,
 		"tlc2.TLC",
 		tla_file_path,
-		"-tool",
+		--"-tool",
 		"-modelcheck",
 		"-coverage",
 		"1",
 		"-config",
 		cfg_file_path,
 	}
-	check.make_check_job(tla_file_path, check_args, config):start()
+	--check.make_check_job(tla_file_path, check_args, config):start()
+  check.run_check_job(tla_file_path, check_args, config)
 end
 
 -- Translate PlusCal in current file into TLA+
