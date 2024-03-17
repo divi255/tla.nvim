@@ -7,11 +7,13 @@ from neotermcolor import cprint
 
 sys.argv.pop(0)
 
-# Start the subprocess and get stdout, stderr
+print(' '.join(sys.argv))
 process = subprocess.Popen(sys.argv,
                            stdout=subprocess.PIPE,
                            stderr=subprocess.PIPE,
                            text=True)
+
+errors = False
 
 while True:
     reads = [process.stdout.fileno(), process.stderr.fileno()]
@@ -29,8 +31,16 @@ while True:
             cprint(line, 'green')
         elif line.startswith('Error:'):
             cprint(line, 'red')
+            errors = True
         else:
             print(line)
 
     if process.poll() is not None:
         break
+
+if errors:
+    cprint('Errors found', 'red')
+    sys.exit(1)
+else:
+    cprint('Check completed', 'green')
+    sys.exit(0)
